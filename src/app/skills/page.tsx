@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { Skill } from "@prisma/client";
 import SkillsClient from "./SkillsClient";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -11,7 +12,7 @@ export const metadata = {
 export const revalidate = 60; // Revalidate every minute
 
 export default async function SkillsPage() {
-  let skills = [];
+  let skills: Skill[] = [];
   try {
     skills = await prisma.skill.findMany({
       orderBy: { order: "asc" },

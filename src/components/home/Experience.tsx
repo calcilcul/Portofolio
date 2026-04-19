@@ -11,20 +11,7 @@ export default function Experience({ experiences }: { experiences: Experience[] 
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const itemsToRender = experiences.length > 0 ? experiences : [
-    {
-      role: "Full-Stack Developer",
-      company: "Freelance",
-      period: "2023 – Present",
-      description: "Building modern web applications for clients using Next.js, TypeScript, and MySQL."
-    },
-    {
-      role: "Junior Web Developer",
-      company: "Self-directed Projects",
-      period: "2022 – 2023",
-      description: "Developed and deployed personal and academic projects using React and Node.js."
-    }
-  ];
+  const itemsToRender = experiences;
 
   return (
     <section id="experience" ref={ref} className="py-32 relative">

@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { Project, Profile, Skill } from "@prisma/client";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ProjectsClient from "./ProjectsClient";
@@ -6,9 +7,9 @@ import ProjectsClient from "./ProjectsClient";
 export const revalidate = 60;
 
 export default async function ProjectsPage() {
-  let projects = [];
-  let profile = null;
-  let skills = [];
+  let projects: Project[] = [];
+  let profile: Profile | null = null;
+  let skills: Skill[] = [];
 
   try {
     [projects, profile, skills] = await Promise.all([

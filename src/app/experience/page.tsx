@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { Experience } from "@prisma/client";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
@@ -13,7 +14,7 @@ export const metadata = {
 export const revalidate = 60;
 
 export default async function ExperiencePage() {
-  let experiences = [];
+  let experiences: Experience[] = [];
   try {
     experiences = await prisma.experience.findMany({
       orderBy: { order: "asc" },

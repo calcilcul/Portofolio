@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { Profile, Experience, Education, Testimonial, Skill } from "@prisma/client";
 import AboutClient from "./AboutClient";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -11,11 +12,11 @@ export const metadata = {
 export const revalidate = 60;
 
 export default async function AboutPage() {
-  let profile = null;
-  let experiences = [];
-  let educations = [];
-  let testimonials = [];
-  let skills = [];
+  let profile: Profile | null = null;
+  let experiences: Experience[] = [];
+  let educations: Education[] = [];
+  let testimonials: Testimonial[] = [];
+  let skills: Skill[] = [];
 
   try {
     [profile, experiences, educations, testimonials, skills] = await Promise.all([

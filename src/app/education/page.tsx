@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { Education } from "@prisma/client";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
@@ -13,7 +14,7 @@ export const metadata = {
 export const revalidate = 60;
 
 export default async function EducationPage() {
-  let educations = [];
+  let educations: Education[] = [];
   try {
     educations = await prisma.education.findMany({
       orderBy: { order: "asc" },

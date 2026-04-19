@@ -105,11 +105,7 @@ export default function Projects({ projects }: { projects: Project[] }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const isEmpty = projects.length === 0;
-  const items = isEmpty
-    ? [{ id: "p1", title: "Project Alpha", description: "A highly interactive dashboard seamlessly integrating data.", imageUrl: null, demoLink: null, githubLink: null, order: 0 },
-       { id: "p2", title: "Project Beta", description: "Real-time analytics tool built for rapid insights.", imageUrl: null, demoLink: null, githubLink: null, order: 1 }]
-    : projects;
+  const items = projects;
 
   return (
     <section id="projects" ref={ref} className="py-32 relative">

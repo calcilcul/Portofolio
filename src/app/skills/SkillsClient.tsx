@@ -13,18 +13,7 @@ type Skill = {
 };
 
 export default function SkillsClient({ skills }: { skills: Skill[] }) {
-  const defaultSkills: Skill[] = [
-    { id: "1", name: "Next.js", category: "Frontend", description: "Next.js is a React framework for building full-stack web applications. It provides features like server-side rendering, static site generation, and more.", imageUrl: null, link: "https://nextjs.org/" },
-    { id: "2", name: "TypeScript", category: "Language", description: "TypeScript is a superset of JavaScript that compiles to clean JavaScript output. It adds static types to the language.", imageUrl: null, link: "https://www.typescriptlang.org/" },
-    { id: "3", name: "React", category: "Frontend", description: "React is a JavaScript library for building user interfaces based on UI components. It is maintained by Meta and a community of individual developers.", imageUrl: null, link: "https://react.dev/" },
-    { id: "4", name: "Tailwind CSS", category: "Frontend", description: "Tailwind CSS is a utility-first CSS framework for rapidly building modern websites without ever leaving your HTML.", imageUrl: null, link: "https://tailwindcss.com/" },
-    { id: "5", name: "Prisma", category: "Backend", description: "Prisma is a next-generation Node.js and TypeScript ORM that helps developers build faster and make fewer errors.", imageUrl: null, link: "https://www.prisma.io/" },
-    { id: "6", name: "Node.js", category: "Backend", description: "Node.js is an open-source, cross-platform JavaScript runtime environment that executes JavaScript code outside a web browser.", imageUrl: null, link: "https://nodejs.org/" },
-    { id: "7", name: "MySQL", category: "Backend", description: "MySQL is an open-source relational database management system base on SQL. It is used for data warehousing and logging applications.", imageUrl: null, link: "https://www.mysql.com/" },
-    { id: "8", name: "Docker", category: "DevOps", description: "Docker is a software platform that facilitates building, testing, and deploying applications efficiently by packaging them into standardized units called containers.", imageUrl: null, link: "https://www.docker.com/" },
-  ];
-
-  const items = skills.length > 0 ? skills : defaultSkills;
+  const items = skills;
 
   const titleVariant = {
     hidden: { opacity: 0, y: 30 },

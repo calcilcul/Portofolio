@@ -22,10 +22,7 @@ export default function Certificates({ certificates }: { certificates: Certifica
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   
-  const items = certificates.length > 0 ? certificates : [
-    { id: "c1", name: "AWS Certified Developer", issuer: "Amazon Web Services", date: "2025", imageUrl: null, link: null, order: 0 },
-    { id: "c2", name: "Frontend Architecture", issuer: "Frontend Masters", date: "2024", imageUrl: null, link: null, order: 1 },
-  ];
+  const items = certificates;
 
   return (
     <section id="certificates" ref={ref} className="py-32 relative">

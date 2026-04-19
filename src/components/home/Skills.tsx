@@ -34,18 +34,7 @@ export default function Skills({ skills }: { skills: Skill[] }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   
-  const defaultSkills: Skill[] = [
-    { id: "1", name: "Next.js", category: "Frontend" },
-    { id: "2", name: "TypeScript", category: "Language" },
-    { id: "3", name: "React", category: "Frontend" },
-    { id: "4", name: "Tailwind CSS", category: "Frontend" },
-    { id: "5", name: "Prisma", category: "Backend" },
-    { id: "6", name: "MySQL", category: "Backend" },
-    { id: "7", name: "Node.js", category: "Backend" },
-    { id: "8", name: "Git", category: "Other" },
-  ];
-
-  const items = skills.length > 0 ? skills : defaultSkills;
+  const items = skills;
 
   const getProficiency = (name: string) => {
     const l = name.toLowerCase();
