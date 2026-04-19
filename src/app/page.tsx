@@ -15,14 +15,25 @@ import SectionWrapper from "@/components/ui/SectionWrapper";
 export const revalidate = 60;
 
 async function getData() {
-  const [profile, skills, experiences, projects, certificates] = await Promise.all([
-    prisma.profile.findFirst(),
-    prisma.skill.findMany({ orderBy: { order: "asc" } }),
-    prisma.experience.findMany({ orderBy: { order: "asc" } }),
-    prisma.project.findMany({ orderBy: { order: "asc" } }),
-    prisma.certificate.findMany({ orderBy: { order: "asc" } }),
-  ]);
-  return { profile, skills, experiences, projects, certificates };
+  try {
+    const [profile, skills, experiences, projects, certificates] = await Promise.all([
+      prisma.profile.findFirst(),
+      prisma.skill.findMany({ orderBy: { order: "asc" } }),
+      prisma.experience.findMany({ orderBy: { order: "asc" } }),
+      prisma.project.findMany({ orderBy: { order: "asc" } }),
+      prisma.certificate.findMany({ orderBy: { order: "asc" } }),
+    ]);
+    return { profile, skills, experiences, projects, certificates };
+  } catch (error) {
+    console.error("Database fetch error:", error);
+    return { 
+      profile: null, 
+      skills: [], 
+      experiences: [], 
+      projects: [], 
+      certificates: [] 
+    };
+  }
 }
 
 export default async function HomePage() {

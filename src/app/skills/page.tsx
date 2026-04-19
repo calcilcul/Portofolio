@@ -11,9 +11,14 @@ export const metadata = {
 export const revalidate = 60; // Revalidate every minute
 
 export default async function SkillsPage() {
-  const skills = await prisma.skill.findMany({
-    orderBy: { order: "asc" },
-  });
+  let skills = [];
+  try {
+    skills = await prisma.skill.findMany({
+      orderBy: { order: "asc" },
+    });
+  } catch (error) {
+    console.error("Skills page database error:", error);
+  }
 
   return (
     <>

@@ -13,9 +13,14 @@ export const metadata = {
 export const revalidate = 60;
 
 export default async function ExperiencePage() {
-  const experiences = await prisma.experience.findMany({
-    orderBy: { order: "asc" },
-  });
+  let experiences = [];
+  try {
+    experiences = await prisma.experience.findMany({
+      orderBy: { order: "asc" },
+    });
+  } catch (error) {
+    console.error("Experience page database error:", error);
+  }
 
   return (
     <>

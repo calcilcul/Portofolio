@@ -6,11 +6,19 @@ import ProjectsClient from "./ProjectsClient";
 export const revalidate = 60;
 
 export default async function ProjectsPage() {
-  const [projects, profile, skills] = await Promise.all([
-    prisma.project.findMany({ orderBy: { order: "asc" } }),
-    prisma.profile.findFirst(),
-    prisma.skill.findMany({ orderBy: { order: "asc" } }),
-  ]);
+  let projects = [];
+  let profile = null;
+  let skills = [];
+
+  try {
+    [projects, profile, skills] = await Promise.all([
+      prisma.project.findMany({ orderBy: { order: "asc" } }),
+      prisma.profile.findFirst(),
+      prisma.skill.findMany({ orderBy: { order: "asc" } }),
+    ]);
+  } catch (error) {
+    console.error("Projects page database error:", error);
+  }
 
   return (
     <>

@@ -11,13 +11,23 @@ export const metadata = {
 export const revalidate = 60;
 
 export default async function AboutPage() {
-  const [profile, experiences, educations, testimonials, skills] = await Promise.all([
-    prisma.profile.findFirst(),
-    prisma.experience.findMany({ orderBy: { order: "asc" } }),
-    prisma.education.findMany({ orderBy: { order: "asc" } }),
-    prisma.testimonial.findMany({ orderBy: { order: "asc" } }),
-    prisma.skill.findMany({ orderBy: { order: "asc" } }),
-  ]);
+  let profile = null;
+  let experiences = [];
+  let educations = [];
+  let testimonials = [];
+  let skills = [];
+
+  try {
+    [profile, experiences, educations, testimonials, skills] = await Promise.all([
+      prisma.profile.findFirst(),
+      prisma.experience.findMany({ orderBy: { order: "asc" } }),
+      prisma.education.findMany({ orderBy: { order: "asc" } }),
+      prisma.testimonial.findMany({ orderBy: { order: "asc" } }),
+      prisma.skill.findMany({ orderBy: { order: "asc" } }),
+    ]);
+  } catch (error) {
+    console.error("About page database error:", error);
+  }
 
   return (
     <>

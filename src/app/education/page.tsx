@@ -13,9 +13,14 @@ export const metadata = {
 export const revalidate = 60;
 
 export default async function EducationPage() {
-  const educations = await prisma.education.findMany({
-    orderBy: { order: "asc" },
-  });
+  let educations = [];
+  try {
+    educations = await prisma.education.findMany({
+      orderBy: { order: "asc" },
+    });
+  } catch (error) {
+    console.error("Education page database error:", error);
+  }
 
   return (
     <>
