@@ -45,6 +45,7 @@ type PreserveAspectRatio =
 interface MarqueeAlongSvgPathProps {
   children: React.ReactNode
   className?: string
+  style?: React.CSSProperties
   path: string
   pathId?: string
   preserveAspectRatio?: PreserveAspectRatio
@@ -78,6 +79,7 @@ interface MarqueeAlongSvgPathProps {
 const MarqueeAlongSvgPath = ({
   children,
   className,
+  style,
   path,
   pathId,
   preserveAspectRatio = "xMidYMid meet",
@@ -248,6 +250,7 @@ const MarqueeAlongSvgPath = ({
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerUp}
       className={cn("relative", className)}
+      style={style}
     >
       <div
         ref={marqueeContainerRef}
