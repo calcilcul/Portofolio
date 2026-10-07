@@ -10,7 +10,7 @@
  *
  */
 import { ArrowRight, Download } from 'lucide-react'
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView, Variants } from 'framer-motion'
 import { clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 import { useRef } from 'react'
@@ -49,11 +49,11 @@ export default function TeamMemberCard({
 
   // When not in view, keep opacity 0. When in view, animate to 1.
   // We'll use variants to control children based on parent state.
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: { 
       opacity: 1,
-      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1], staggerChildren: 0.1 }
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], staggerChildren: 0.1 }
     }
   }
 
