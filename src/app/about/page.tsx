@@ -4,6 +4,7 @@ import AboutClient from "./AboutClient";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
+
 export const metadata = {
   title: "About | Faisal Ramdhani",
   description: "Learn more about my journey, experience, and background as a full-stack developer.",
@@ -34,6 +35,7 @@ export default async function AboutPage() {
     <>
       <Navbar />
       <main className="min-h-screen pt-40 pb-20 bg-[#fafafa] dark:bg-[#1b1e16] flex flex-col transition-colors duration-300">
+        
         <AboutClient profile={profile} experiences={experiences} educations={educations} testimonials={testimonials} />
       </main>
       <Footer 

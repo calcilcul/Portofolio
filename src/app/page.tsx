@@ -16,13 +16,12 @@ export const revalidate = 60;
 
 async function getData() {
   try {
-    const [profile, skills, experiences, projects, certificates] = await Promise.all([
-      prisma.profile.findFirst(),
-      prisma.skill.findMany({ orderBy: { order: "asc" } }),
-      prisma.experience.findMany({ orderBy: { order: "asc" } }),
-      prisma.project.findMany({ orderBy: { order: "asc" } }),
-      prisma.certificate.findMany({ orderBy: { order: "asc" } }),
-    ]);
+    const profile = await prisma.profile.findFirst();
+    const skills = await prisma.skill.findMany({ orderBy: { order: "asc" } });
+    const experiences = await prisma.experience.findMany({ orderBy: { order: "asc" } });
+    const projects = await prisma.project.findMany({ orderBy: { order: "asc" } });
+    const certificates = await prisma.certificate.findMany({ orderBy: { order: "asc" } });
+
     return { profile, skills, experiences, projects, certificates };
   } catch (error) {
     console.error("Database fetch error:", error);
@@ -36,6 +35,9 @@ async function getData() {
   }
 }
 
+import Interactive3DBoxes from "@/components/home/Interactive3DBoxes";
+import RetroIntroGate from "@/components/ui/RetroIntroGate";
+
 export default async function HomePage() {
   const { profile, skills, experiences, projects, certificates } = await getData();
 
@@ -47,10 +49,12 @@ export default async function HomePage() {
   return (
     <>
       <LoadingScreen />
+      <RetroIntroGate />
       <Navbar />
 
       <main>
         <Hero name={name} professionalTitle={title} />
+        <Interactive3DBoxes />
         <SectionWrapper><About aboutText={about} cvLink={profile?.cvLink} aboutPhoto={profile?.aboutPhoto} /></SectionWrapper>
         <SectionWrapper><Skills skills={skills} /></SectionWrapper>
         <SectionWrapper><Experience experiences={experiences} /></SectionWrapper>

@@ -4,6 +4,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ProjectsClient from "./ProjectsClient";
 
+
 export const revalidate = 60;
 
 export default async function ProjectsPage() {
@@ -25,6 +26,7 @@ export default async function ProjectsPage() {
     <>
       <Navbar />
       <main className="min-h-screen pt-40 pb-32 bg-[#1b1e16]">
+         
          <ProjectsClient projects={projects} />
       </main>
       <Footer 

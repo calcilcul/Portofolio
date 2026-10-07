@@ -1,108 +1,133 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import {
-  Globe, Code2, Database, FileCode, BarChart3, Layout,
-  Server, Cpu, GitBranch, Terminal, Layers, PenTool, Monitor,
-  Table2, Network, FileJson,
-} from "lucide-react";
+import { useInView } from "framer-motion";
+import MarqueeAlongSvgPath from "@/components/ui/marquee-along-svg-path";
 
-interface Skill { id: string; name: string; category?: string | null; }
+// ─── Skill Logo Chips ─────────────────────────────────────────────────────────
+const SKILLS = [
+  { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" },
+  { name: "Python", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" },
+  { name: "Java", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" },
+  { name: "HTML", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" },
+  { name: "CSS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" },
+  { name: "C", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg" },
+  { name: "SQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azuresqldatabase/azuresqldatabase-original.svg" },
+  { name: "React.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" },
+  { name: "Next.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" },
+  { name: "Tailwind CSS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" },
+  { name: "React Native", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" },
+  { name: "PostgreSQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" },
+  { name: "MySQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" },
+  { name: "Node.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" },
+  { name: "Express", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg" },
+  { name: "Git", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" },
+  { name: "GitHub", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" },
+  { name: "Figma", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" },
+  { name: "VS Code", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" },
+  { name: "Vercel", logo: "https://cdn.simpleicons.org/vercel/ffffff" },
+  { name: "scikit-learn", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/scikitlearn/scikitlearn-original.svg" },
+  { name: "Pandas", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg" },
+  { name: "NumPy", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/numpy/numpy-original.svg" },
+];
 
-function getIcon(name: string) {
-  const n = name.toLowerCase();
-  if (n.includes("html")) return <Globe className="w-6 h-6" />;
-  if (n.includes("css")) return <Layout className="w-6 h-6" />;
-  if (n.includes("javascript") || n.includes("js")) return <FileCode className="w-6 h-6" />;
-  if (n.includes("typescript")) return <FileJson className="w-6 h-6" />;
-  if (n.includes("react")) return <Cpu className="w-6 h-6" />;
-  if (n.includes("next")) return <Layers className="w-6 h-6" />;
-  if (n.includes("php")) return <Server className="w-6 h-6" />;
-  if (n.includes("mysql") || n.includes("sql")) return <Database className="w-6 h-6" />;
-  if (n.includes("erd")) return <Network className="w-6 h-6" />;
-  if (n.includes("system") || n.includes("analysis")) return <BarChart3 className="w-6 h-6" />;
-  if (n.includes("git")) return <GitBranch className="w-6 h-6" />;
-  if (n.includes("node")) return <Terminal className="w-6 h-6" />;
-  if (n.includes("design") || n.includes("figma")) return <PenTool className="w-6 h-6" />;
-  if (n.includes("tailwind")) return <Monitor className="w-6 h-6" />;
-  if (n.includes("prisma")) return <Table2 className="w-6 h-6" />;
-  return <Code2 className="w-6 h-6" />;
+// S-curve path that forms a loop in the middle like the reference
+const PATH =
+  "M1 209.434C58.5872 255.935 387.926 325.938 482.583 209.434C600.905 63.8051 525.516 -43.2211 427.332 19.9613C329.149 83.1436 352.902 242.723 515.041 267.302C644.752 286.966 943.56 181.94 995 156.5";
+
+const VIEWBOX = "0 0 996 330";
+
+// ─── Single logo chip ─────────────────────────────────────────────────────────
+function LogoChip({ name, logo }: { name: string; logo: string }) {
+  return (
+    <div
+      title={name}
+      className="group relative flex items-center justify-center w-14 h-14 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:border-[color:var(--color-lime-accent)] hover:scale-125 hover:shadow-[0_0_20px_rgba(203,255,0,0.4)] transition-all duration-300 cursor-default"
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={logo}
+        alt={name}
+        width={32}
+        height={32}
+        loading="lazy"
+        draggable={false}
+        className="w-8 h-8 object-contain"
+      />
+      {/* Tooltip */}
+      <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+        <div className="bg-[#1C1C1A] border border-[color:var(--color-lime-accent)] text-[color:var(--color-lime-accent)] text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
+          {name}
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default function Skills({ skills }: { skills: Skill[] }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  
-  const items = skills;
+// ─── Main Component ────────────────────────────────────────────────────────────
+interface Skill { id: string; name: string; category?: string | null; }
 
-  const getProficiency = (name: string) => {
-    const l = name.toLowerCase();
-    if (l.includes("next") || l.includes("react") || l.includes("tailwind") || l.includes("html") || l.includes("css")) return "w-[90%]";
-    if (l.includes("typescript") || l.includes("javascript") || l.includes("js")) return "w-[85%]";
-    if (l.includes("node") || l.includes("php") || l.includes("mysql") || l.includes("prisma")) return "w-[80%]";
-    return "w-[75%]";
-  };
-
-  const groups = items.reduce<Record<string, Skill[]>>((acc, s) => {
-    const cat = s.category ?? "Other";
-    if (!acc[cat]) acc[cat] = [];
-    acc[cat].push(s);
-    return acc;
-  }, {});
+export default function Skills({ skills: _dbSkills }: { skills: Skill[] }) {
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
   return (
-    <section id="skills" ref={ref} className="py-24 md:py-32 relative">
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <motion.div
-           initial={{ opacity: 0, y: 20 }}
-           animate={isInView ? { opacity: 1, y: 0 } : {}}
-           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
-           className="mb-20 text-center flex flex-col items-center"
-        >
+    <section id="skills" ref={sectionRef} className="py-24 md:py-32 relative">
+      <div className="relative z-10">
+        {/* Header */}
+        <div className="max-w-7xl mx-auto px-6 mb-8 text-center flex flex-col items-center">
           <h2 className="text-4xl md:text-[3.5rem] font-bold tracking-tight text-gray-900 dark:text-white mb-6 flex flex-wrap items-center justify-center gap-3 leading-tight">
             Technical
             <span className="bg-[#1A1A1A] dark:bg-white text-[color:var(--color-lime-accent)] dark:text-[#1A1A1A] px-5 py-1.5 md:py-2 rounded-2xl md:rounded-3xl shadow-sm">
               Skills
             </span>
           </h2>
-          <p className="text-lg md:text-xl text-gray-500 dark:text-gray-400 font-medium">My toolbelt for crafting high-quality web solutions</p>
-        </motion.div>
-
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
-          {items.map((skill, index) => (
-            <motion.div
-              key={skill.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: index * 0.05, duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
-              whileHover={{ scale: 1.03, y: -5 }}
-              className="glass-panel p-6 md:p-8 rounded-[2rem] flex flex-col items-center justify-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white border-gray-200/60 dark:border-white/10 hover:shadow-[0_20px_40px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_20px_40px_rgba(203,255,0,0.05)] hover:border-gray-300 dark:hover:border-white/20 cursor-default transition-all duration-300 bg-white/60 dark:bg-[#1C1C1A]/60 group min-h-[160px] md:min-h-[180px]"
-            >
-              <div className="mb-4 text-gray-400 dark:text-gray-500 group-hover:text-[color:var(--color-lime-accent)] group-hover:scale-110 transition-all duration-300">
-                {getIcon(skill.name)}
-              </div>
-              <span className="text-base md:text-lg font-bold tracking-wide text-center text-gray-900 dark:text-white mb-1.5 group-hover:text-[color:var(--color-lime-accent)] transition-colors">
-                {skill.name}
-              </span>
-              <span className="text-[11px] md:text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 text-center">
-                {skill.category || 'Tool'}
-              </span>
-            </motion.div>
-          ))}
+          <p className="text-lg md:text-xl text-gray-500 dark:text-gray-400 font-medium">
+            My toolbelt for crafting high-quality web solutions
+          </p>
         </div>
 
-        <motion.div
-           initial={{ opacity: 0, y: 20 }}
-           animate={isInView ? { opacity: 1, y: 0 } : {}}
-           transition={{ delay: 0.5, duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
-           className="mt-20 text-center"
-        >
-          <a href="/skills" className="inline-flex items-center justify-center gap-2 px-10 py-5 bg-gray-900 dark:bg-white text-white dark:text-black rounded-full text-lg font-semibold shadow-xl border border-transparent hover:scale-[1.02] hover:shadow-[0_0_20px_var(--color-lime-accent)] hover:border-[color:var(--color-lime-accent)] transition-all duration-300 hover:bg-gray-800 dark:hover:bg-[#1C1C1A] dark:hover:text-white group">
-            View All Tools & Details 
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-80 transition-transform group-hover:translate-x-1"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+        {/* Marquee along SVG path — wrapped with fade mask */}
+        {isInView && (
+          <div
+            className="w-full relative py-8"
+            style={{
+              maskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+              WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+            }}
+          >
+          <MarqueeAlongSvgPath
+            path={PATH}
+            viewBox={VIEWBOX}
+            baseVelocity={6}
+            slowdownOnHover={true}
+            slowDownFactor={0.08}
+            draggable={true}
+            repeat={2}
+            dragSensitivity={0.15}
+            grabCursor={true}
+            showPath={false}
+            responsive={true}
+            className="w-full overflow-visible"
+            style={{ height: "460px" } as React.CSSProperties}
+          >
+            {SKILLS.map((skill) => (
+              <LogoChip key={skill.name} name={skill.name} logo={skill.logo} />
+            ))}
+          </MarqueeAlongSvgPath>
+          </div>
+        )}
+
+        {/* CTA */}
+        <div className="max-w-7xl mx-auto px-6 mt-8 text-center">
+          <a
+            href="/skills"
+            className="inline-flex items-center justify-center gap-2 px-10 py-5 bg-gray-900 dark:bg-white text-white dark:text-black rounded-full text-lg font-semibold shadow-xl border border-transparent hover:scale-[1.02] hover:shadow-[0_0_20px_var(--color-lime-accent)] hover:border-[color:var(--color-lime-accent)] transition-all duration-300 group"
+          >
+            View All Tools & Details
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-80 transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </a>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

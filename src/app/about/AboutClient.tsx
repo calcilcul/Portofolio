@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight, Quote, Image as ImageIcon, Download } from "lucide-react";
+import { ArrowUpRight, Image as ImageIcon, Download } from "lucide-react";
 
 import Link from "next/link";
 
@@ -55,10 +55,10 @@ export default function AboutClient({ profile, experiences, educations = [], tes
           </h2>
           <div className="text-lg text-gray-500 dark:text-gray-400 leading-relaxed font-medium space-y-4">
             <p>
-              {profile?.aboutText || "I build things for the web. My background as a developer has allowed me to work on incredibly fast and robust projects, delivering highly optimized solutions. I am deeply passionate about modern web technologies and creating performant user interfaces."}
+              {profile?.aboutText || "I am a motivated and passionate individual with experience in both technology and community engagement. I enjoy working collaboratively, solving challenges, and contributing meaningfully to every team I am part of."}
             </p>
             <p>
-              When I'm not writing code or building full-stack applications, I enjoy exploring new design trends, contributing to open source, and pushing the limits of what can be done on the modern web platform.
+              Beyond academics and technical work, I actively participate in organizations and volunteer programs, where I have developed strong leadership, teamwork, and communication skills.
             </p>
           </div>
         </motion.div>
@@ -168,49 +168,7 @@ export default function AboutClient({ profile, experiences, educations = [], tes
 
       </section>
 
-      {/* 3. Testimonials Section */}
-      <section className="bg-white dark:bg-[#111111] rounded-[3rem] p-8 md:p-12 lg:p-16 border border-gray-100 dark:border-white/5 shadow-sm relative overflow-hidden">
-        {/* Subtle decorative background for testimonials */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gray-50 dark:bg-white/5 rounded-full blur-[80px] -z-10 translate-x-1/2 -translate-y-1/2"></div>
-        
-        <div className="mb-12">
-          <h3 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-gray-900 dark:text-white mb-4">Testimonials</h3>
-          <p className="text-gray-500 font-medium">A few kind words from people I have worked with.</p>
-        </div>
 
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-3 gap-6"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
-          }}
-        >
-          {testimonials.map((test, i) => (
-            <motion.div 
-              key={test.id}
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const } }
-              }}
-              className="bg-gray-50/50 dark:bg-[#1C1C1A] rounded-[2rem] p-8 flex flex-col border border-gray-100 dark:border-white/5 hover:border-[color:var(--color-lime-accent)] transition-colors shadow-sm min-h-[250px] group hover:shadow-[0_0_15px_rgba(203,255,0,0.1)]"
-            >
-              <div className="w-10 h-10 rounded-full bg-white dark:bg-black/20 flex items-center justify-center text-blue-500 dark:text-blue-400 mb-6 shadow-sm">
-                <Quote size={18} fill="currentColor" className="opacity-40" />
-              </div>
-              <p className="text-[14px] leading-relaxed text-gray-600 dark:text-gray-300 font-medium mb-10 flex-1 italic break-words break-all">
-                "{test.text}"
-              </p>
-              <div className="mt-auto min-w-0">
-                <p className="font-bold text-gray-900 dark:text-white text-sm mb-1 truncate">- {test.author}</p>
-                <p className="text-[11px] uppercase tracking-widest text-gray-400 font-bold truncate">{test.role}</p>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
 
       {/* 4. Call to Action */}
       <section className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-16 pt-8 pb-4">

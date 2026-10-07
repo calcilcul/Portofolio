@@ -23,9 +23,9 @@ export default function Experience({ experiences }: { experiences: Experience[] 
            className="mb-20 text-center"
         >
           <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-gray-900 dark:text-white mb-6">
-            Professional Experience.
+            My Experience.
           </h2>
-          <p className="text-xl text-gray-500 dark:text-gray-400 font-medium">My history of creating value through code.</p>
+          <p className="text-xl text-gray-500 dark:text-gray-400 font-medium">Organizations, volunteer work, and activities I have been part of.</p>
         </motion.div>
 
         {itemsToRender.length === 0 ? (

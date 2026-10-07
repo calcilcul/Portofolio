@@ -1,10 +1,10 @@
 import { prisma } from "@/lib/prisma";
 import { Experience } from "@prisma/client";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ExperienceClient from "./ExperienceClient";
+
 
 export const metadata = {
   title: "Experience | Faisal Ramdhani",
@@ -31,11 +31,7 @@ export default async function ExperiencePage() {
         <div className="absolute bottom-[10%] left-[5%] w-[400px] h-[400px] bg-emerald-500/10 rounded-full blur-[100px] -z-10" />
         
         <div className="w-full max-w-4xl mx-auto px-6 relative z-10">
-          <div className="flex justify-end mb-4">
-             <Link href="/about" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/10 bg-white/5 text-sm font-bold text-white hover:bg-white hover:text-black transition-colors shadow-sm">
-                <ArrowLeft size={16} /> Back
-             </Link>
-          </div>
+          
           <div className="mb-16 text-center">
              <h1 className="text-5xl md:text-6xl font-black uppercase text-white tracking-tighter mb-4">
                Professional <span className="text-[color:var(--color-lime-accent)]">Journey</span>

@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   },
 };
 
+import PreLoader from "@/components/ui/PreLoader";
 import PageTransition from "@/components/ui/PageTransition";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 
@@ -29,9 +30,11 @@ export default function RootLayout({
         <BackgroundOrbs />
         <ScrollToTop />
         <Providers>
-          <PageTransition>
-            {children}
-          </PageTransition>
+          <PreLoader>
+            <PageTransition>
+              {children}
+            </PageTransition>
+          </PreLoader>
         </Providers>
       </body>
     </html>

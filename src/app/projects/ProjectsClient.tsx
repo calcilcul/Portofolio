@@ -1,19 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import { ExternalLink, ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function ProjectsClient({ projects }: { projects: any[] }) {
-  const [filter, setFilter] = useState("All");
-  const categories = ["All", "Frontend", "Backend", "Fullstack"];
-
-  const filteredProjects = projects.filter(p => {
-    if (filter === "All") return true;
-    if (p.category === filter) return true;
-    return false;
-  });
 
   return (
     <div className="container mx-auto px-6 max-w-7xl">
@@ -30,26 +21,11 @@ export default function ProjectsClient({ projects }: { projects: any[] }) {
           A curated selection of my recent projects, showcasing scalable architectures and elegant interfaces.
         </p>
 
-        {/* Filter buttons */}
-        <div className="flex flex-wrap justify-center gap-3">
-          {categories.map((c) => (
-            <button
-              key={c}
-              onClick={() => setFilter(c)}
-              className={`px-6 py-2.5 rounded-full font-bold uppercase tracking-widest text-xs transition-all duration-300 ${
-                filter === c 
-                  ? "bg-gray-900 dark:bg-white text-white dark:text-black shadow-md shadow-gray-900/20 dark:shadow-[0_0_15px_rgba(255,255,255,0.2)]" 
-                  : "bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/20 hover:text-gray-900 dark:hover:text-white"
-              }`}
-            >
-              {c}
-            </button>
-          ))}
-        </div>
+
       </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16">
-        {filteredProjects.map((project, index) => (
+        {projects.map((project, index) => (
           <motion.div 
             key={project.id} 
             initial={{ opacity: 0, y: 40 }}
@@ -120,14 +96,14 @@ export default function ProjectsClient({ projects }: { projects: any[] }) {
         ))}
       </div>
 
-      {filteredProjects.length === 0 && (
+      {projects.length === 0 && (
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="text-center py-32"
         >
           <span className="text-gray-400 font-bold text-lg uppercase tracking-widest">
-            No projects found in this category.
+            No projects found.
           </span>
         </motion.div>
       )}

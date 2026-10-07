@@ -1,73 +1,80 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+let globalHasLoaded = false;
 
 export default function LoadingScreen() {
-  const [visible, setVisible] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Always start at top of page
-    window.scrollTo({ top: 0, behavior: "instant" });
+    if (globalHasLoaded) {
+      setIsLoading(false);
+      return;
+    }
 
-    // Cinematic entrance duration
-    const t = setTimeout(() => {
-      setVisible(false);
-      // Re-enforce scroll to top after loader exits
-      window.scrollTo({ top: 0, behavior: "instant" });
-    }, 3000);
-    return () => clearTimeout(t);
+    // Total duration of the fake loading in ms
+    const duration = 2000;
+    const intervalTime = 20;
+    const step = 100 / (duration / intervalTime);
+
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          globalHasLoaded = true; // Mark as loaded only when it completes
+          // Small delay before fading out once it hits 100%
+          setTimeout(() => setIsLoading(false), 400);
+          return 100;
+        }
+        return prev + step;
+      });
+    }, intervalTime);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <AnimatePresence>
-      {visible && (
+      {isLoading && (
         <motion.div
-           key="loader"
-           initial={{ opacity: 1 }}
-           exit={{ opacity: 0, scale: 1.1, filter: "blur(20px)" }}
-           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-           className="fixed inset-0 z-[9999] bg-[#1b1e16] flex flex-col items-center justify-center p-8 overflow-hidden"
+          key="loading"
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0, y: "-100%" }}
+          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-zinc-950 text-white overflow-hidden"
         >
-          {/* Animated Background glow for the loader */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 0.15, scale: 1.5 }}
-            transition={{ duration: 3, ease: "easeOut" }}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-[color:var(--color-lime-accent)] rounded-full blur-[100px] pointer-events-none"
-          />
+          <div className="relative flex flex-col items-center justify-center w-full max-w-md px-8">
+            {/* Percentage Text */}
+            <motion.h1
+              className="text-5xl md:text-7xl font-bold tracking-tighter"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              {Math.round(progress)}
+              <span className="text-3xl md:text-5xl text-white/50">%</span>
+            </motion.h1>
 
-          <motion.div
-             initial={{ filter: "blur(20px)", opacity: 0, y: 10 }}
-             animate={{ filter: "blur(0px)", opacity: 1, y: 0 }}
-             transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-             className="relative z-10 flex flex-col items-center gap-8"
-          >
-            {/* Minimalist Logo / Initials */}
-            <h1 className="text-5xl md:text-7xl font-semibold tracking-tighter text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
-              FR
-              <span className="text-[color:var(--color-lime-accent)] drop-shadow-[0_0_15px_rgba(203,255,0,0.6)]">.</span>
-            </h1>
-
-            {/* Cinematic Progress Bar */}
-            <div className="w-48 md:w-64 h-[3px] bg-white/10 rounded-full overflow-hidden">
-               <motion.div 
-                 initial={{ width: "0%" }}
-                 animate={{ width: "100%" }}
-                 transition={{ duration: 2.4, ease: [0.25, 0.1, 0.25, 1] }}
-                 className="h-full bg-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] rounded-full"
-               />
+            {/* Progress Bar */}
+            <div className="w-full h-[2px] bg-white/10 mt-8 rounded-full overflow-hidden">
+              <motion.div
+                className="h-full bg-white"
+                style={{ width: `${progress}%` }}
+              />
             </div>
-            
-            <motion.p 
+
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.5, duration: 1 }}
-              className="text-[color:var(--color-lime-accent)] font-semibold text-xs tracking-widest uppercase"
+              transition={{ delay: 0.2, duration: 1 }}
+              className="tracking-[0.4em] text-xs font-light text-white/40 uppercase mt-8"
             >
               Loading Experience
-            </motion.p>
-          </motion.div>
+            </motion.div>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
