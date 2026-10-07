@@ -15,6 +15,7 @@ export async function updateProfile(data: {
   professionalTitle: string;
   aboutText: string;
   cvLink?: string;
+  heroPhoto?: string;
   aboutPhoto?: string;
   instagramLink?: string;
   githubLink?: string;

@@ -13,6 +13,7 @@ model Profile {
   professionalTitle String   @default("Full-Stack Developer")
   aboutText         String
   cvLink            String?
+  heroPhoto         String?
   aboutPhoto        String?
   instagramLink     String?
   githubLink        String?

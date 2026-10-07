@@ -5,12 +5,13 @@ import TeamMemberCard from "@/components/ui/team-member-card";
 interface AboutProps { 
   aboutText: string; 
   cvLink?: string | null; 
+  heroPhoto?: string | null;
   aboutPhoto?: string | null; 
   name?: string;
   title?: string;
 }
 
-export default function About({ aboutText, cvLink, aboutPhoto, name = "Faisal Ramdhani", title = "Digital Craftsman" }: AboutProps) {
+export default function About({ aboutText, cvLink, heroPhoto, aboutPhoto, name = "Faisal Ramdhani", title = "Digital Craftsman" }: AboutProps) {
   // Use a default image if none provided
   const fallbackImage = "https://images.unsplash.com/photo-1549692520-acc6669e2f0c?q=80&w=2574&auto=format&fit=crop";
 
@@ -26,7 +27,7 @@ export default function About({ aboutText, cvLink, aboutPhoto, name = "Faisal Ra
           jobPosition={title}
           firstName={firstName}
           lastName={lastName}
-          imageUrl={aboutPhoto || fallbackImage}
+          imageUrl={heroPhoto || aboutPhoto || fallbackImage}
           description={
             aboutText || 
             "I'm deeply passionate about bridging the gap between design and engineering. My focus is on writing clean, elegant code that powers beautiful, highly-performant user interfaces."

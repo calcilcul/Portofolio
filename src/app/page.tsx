@@ -51,7 +51,7 @@ export default async function HomePage() {
 
       <main>
         <Hero name={name} professionalTitle={title} />
-        <SectionWrapper><About aboutText={about} cvLink={profile?.cvLink} aboutPhoto={profile?.aboutPhoto} name={name} title={title} /></SectionWrapper>
+        <SectionWrapper><About aboutText={about} cvLink={profile?.cvLink} heroPhoto={profile?.heroPhoto} aboutPhoto={profile?.aboutPhoto} name={name} title={title} /></SectionWrapper>
         <SectionWrapper><Skills skills={skills} /></SectionWrapper>
         <SectionWrapper><Experience experiences={experiences} /></SectionWrapper>
         <SectionWrapper><Projects projects={projects} /></SectionWrapper>
