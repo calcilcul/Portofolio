@@ -14,6 +14,16 @@ import { motion, useInView, Variants } from 'framer-motion'
 import { clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 import { useRef } from 'react'
+
+// Force Cloudinary raw files to download instead of opening in browser
+function toDownloadUrl(url: string): string {
+  if (!url) return url
+  // For Cloudinary URLs, inject fl_attachment flag
+  if (url.includes('res.cloudinary.com') && url.includes('/raw/upload/')) {
+    return url.replace('/raw/upload/', '/raw/upload/fl_attachment/')
+  }
+  return url
+}
 function cn(...inputs: any[]) { return twMerge(clsx(inputs)) }
 
 interface TeamMemberCardProps {
@@ -137,9 +147,10 @@ export default function TeamMemberCard({
             <div className="shrink-0 mt-2">
               {cvLink ? (
                 <a
-                  href={cvLink}
+                  href={toDownloadUrl(cvLink)}
                   target="_blank"
                   rel="noopener noreferrer"
+                  download
                   className="group flex h-16 w-16 items-center justify-center rounded-full border border-white/20 bg-zinc-900/50 transition-all duration-500 ease-out hover:w-[200px] hover:bg-[color:var(--color-lime-accent)] hover:border-[color:var(--color-lime-accent)] shadow-lg"
                 >
                   <Download

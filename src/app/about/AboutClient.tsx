@@ -2,8 +2,16 @@
 
 import { motion } from "framer-motion";
 import { ArrowUpRight, Image as ImageIcon, Download } from "lucide-react";
-
 import Link from "next/link";
+
+// Force Cloudinary raw files to download instead of opening in browser
+function toDownloadUrl(url: string): string {
+  if (!url) return url
+  if (url.includes('res.cloudinary.com') && url.includes('/raw/upload/')) {
+    return url.replace('/raw/upload/', '/raw/upload/fl_attachment/')
+  }
+  return url
+}
 
 interface AboutClientProps {
   profile: any;
@@ -176,7 +184,7 @@ export default function AboutClient({ profile, experiences, educations = [], tes
            Say Hello
          </a>
          {profile?.cvLink && (
-           <a href={profile.cvLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-10 py-5 bg-white dark:bg-[#1C1C1A] text-gray-900 dark:text-white rounded-full text-sm font-bold uppercase tracking-widest shadow-sm border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-[#252522] dark:hover:border-[color:var(--color-lime-accent)] hover:shadow-[0_0_20px_rgba(203,255,0,0.15)] hover:border-[color:var(--color-lime-accent)] transition-all duration-300 gap-2">
+           <a href={toDownloadUrl(profile.cvLink)} target="_blank" rel="noopener noreferrer" download className="inline-flex items-center justify-center px-10 py-5 bg-white dark:bg-[#1C1C1A] text-gray-900 dark:text-white rounded-full text-sm font-bold uppercase tracking-widest shadow-sm border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-[#252522] dark:hover:border-[color:var(--color-lime-accent)] hover:shadow-[0_0_20px_rgba(203,255,0,0.15)] hover:border-[color:var(--color-lime-accent)] transition-all duration-300 gap-2">
              <Download size={18} /> Resume
            </a>
          )}
