@@ -35,8 +35,6 @@ async function getData() {
   }
 }
 
-import Interactive3DBoxes from "@/components/home/Interactive3DBoxes";
-import RetroIntroGate from "@/components/ui/RetroIntroGate";
 
 export default async function HomePage() {
   const { profile, skills, experiences, projects, certificates } = await getData();
@@ -49,12 +47,10 @@ export default async function HomePage() {
   return (
     <>
       <LoadingScreen />
-      <RetroIntroGate />
       <Navbar />
 
       <main>
         <Hero name={name} professionalTitle={title} />
-        <Interactive3DBoxes />
         <SectionWrapper><About aboutText={about} cvLink={profile?.cvLink} aboutPhoto={profile?.aboutPhoto} /></SectionWrapper>
         <SectionWrapper><Skills skills={skills} /></SectionWrapper>
         <SectionWrapper><Experience experiences={experiences} /></SectionWrapper>
