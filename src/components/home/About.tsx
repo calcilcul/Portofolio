@@ -6,20 +6,26 @@ interface AboutProps {
   aboutText: string; 
   cvLink?: string | null; 
   aboutPhoto?: string | null; 
+  name?: string;
+  title?: string;
 }
 
-export default function About({ aboutText, cvLink, aboutPhoto }: AboutProps) {
+export default function About({ aboutText, cvLink, aboutPhoto, name = "Faisal Ramdhani", title = "Digital Craftsman" }: AboutProps) {
   // Use a default image if none provided
   const fallbackImage = "https://images.unsplash.com/photo-1549692520-acc6669e2f0c?q=80&w=2574&auto=format&fit=crop";
+
+  const nameParts = name.split(" ");
+  const firstName = nameParts[0];
+  const lastName = nameParts.slice(1).join(" ") || " ";
 
   return (
     <section id="about" className="py-24 relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
         <TeamMemberCard
           position="left"
-          jobPosition="Digital Craftsman"
-          firstName="Faisal"
-          lastName="Ramdhani"
+          jobPosition={title}
+          firstName={firstName}
+          lastName={lastName}
           imageUrl={aboutPhoto || fallbackImage}
           description={
             aboutText || 
