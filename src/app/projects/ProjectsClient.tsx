@@ -3,8 +3,11 @@
 import Image from "next/image";
 import { ExternalLink, ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import ProjectModal from "@/components/ui/ProjectModal";
 
 export default function ProjectsClient({ projects }: { projects: any[] }) {
+  const [selectedProject, setSelectedProject] = useState<any | null>(null);
 
   return (
     <div className="container mx-auto px-6 max-w-7xl">
@@ -32,7 +35,8 @@ export default function ProjectsClient({ projects }: { projects: any[] }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, delay: index % 2 === 0 ? 0 : 0.2 }}
-            className="group relative bg-white/70 dark:bg-[#1C1C1A]/60 backdrop-blur-xl rounded-[2.5rem] overflow-hidden border border-gray-100 dark:border-white/10 hover:border-gray-200 dark:hover:border-[color:var(--color-lime-accent)] hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(203,255,0,0.15)] transition-all duration-500"
+            onClick={() => setSelectedProject(project)}
+            className="group relative bg-white/70 dark:bg-[#1C1C1A]/60 backdrop-blur-xl rounded-[2.5rem] overflow-hidden border border-gray-100 dark:border-white/10 hover:border-gray-200 dark:hover:border-[color:var(--color-lime-accent)] hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(203,255,0,0.15)] transition-all duration-500 cursor-pointer"
           >
             {/* Image */}
             <div className="aspect-[16/10] w-full relative overflow-hidden bg-gray-50 dark:bg-[#111111] border-b border-gray-50 dark:border-white/5">
@@ -67,6 +71,7 @@ export default function ProjectsClient({ projects }: { projects: any[] }) {
                     href={project.sourceLink || project.githubLink}
                     target="_blank"
                     rel="noreferrer"
+                    onClick={(e) => e.stopPropagation()}
                     className="w-10 h-10 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center text-gray-400 hover:bg-gray-900 dark:hover:bg-white hover:text-white dark:hover:text-black transition-all transform hover:-translate-y-1 hover:translate-x-1"
                     title="Source Code"
                   >
@@ -85,6 +90,7 @@ export default function ProjectsClient({ projects }: { projects: any[] }) {
                     href={project.demoLink}
                     target="_blank"
                     rel="noreferrer"
+                    onClick={(e) => e.stopPropagation()}
                     className="inline-flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-widest bg-gray-900 dark:bg-[color:var(--color-lime-accent)] text-white dark:text-black px-6 py-3 rounded-full hover:bg-gray-800 dark:hover:bg-[#b0d900] transition-colors"
                   >
                     <ExternalLink className="w-4 h-4" /> Live Demo
@@ -107,6 +113,12 @@ export default function ProjectsClient({ projects }: { projects: any[] }) {
           </span>
         </motion.div>
       )}
+
+      <ProjectModal 
+        project={selectedProject} 
+        isOpen={!!selectedProject} 
+        onClose={() => setSelectedProject(null)} 
+      />
     </div>
   );
 }

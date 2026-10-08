@@ -1,9 +1,10 @@
 "use client";
 
 import { motion, useInView, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { ExternalLink, Code2, ImageOff } from "lucide-react";
+import ProjectModal from "@/components/ui/ProjectModal";
 
 interface Project {
   id: string; title: string; description: string;
@@ -19,7 +20,7 @@ function ApplePlaceholder({ title }: { title: string }) {
   );
 }
 
-function ProjectCard({ project, isInView }: { project: Project; isInView: boolean }) {
+function ProjectCard({ project, isInView, onClick }: { project: Project; isInView: boolean; onClick: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -56,7 +57,8 @@ function ProjectCard({ project, isInView }: { project: Project; isInView: boolea
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-      className="group relative flex flex-col glass-panel rounded-[2.5rem] overflow-hidden bg-white/70 dark:bg-[#1C1C1A]/80 hover:shadow-[0_24px_50px_rgba(203,255,0,0.15)] transition-colors border border-gray-200/60 dark:border-white/5 h-full z-10"
+      onClick={onClick}
+      className="group relative flex flex-col glass-panel rounded-[2.5rem] overflow-hidden bg-white/70 dark:bg-[#1C1C1A]/80 hover:shadow-[0_24px_50px_rgba(203,255,0,0.15)] transition-colors border border-gray-200/60 dark:border-white/5 h-full z-10 cursor-pointer"
     >
       <div style={{ transform: "translateZ(50px)", transformStyle: "preserve-3d" }} className="flex flex-col h-full pointer-events-none">
         
@@ -78,7 +80,7 @@ function ProjectCard({ project, isInView }: { project: Project; isInView: boolea
         {/* Content Panel */}
         <div className="p-10 flex flex-col flex-1 pointer-events-auto bg-[#1C1C1A]/90 backdrop-blur-xl border-t border-white/5">
           <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-[color:var(--color-lime-accent)] transition-colors">{project.title}</h3>
-          <p className="text-sm font-medium text-gray-500 dark:text-gray-400 leading-relaxed mb-10 flex-1">
+          <p className="text-sm font-medium text-gray-500 dark:text-gray-400 leading-relaxed mb-10 flex-1 line-clamp-3">
             {project.description}
           </p>
           <div className="flex gap-3 mt-auto">
@@ -104,6 +106,7 @@ function ProjectCard({ project, isInView }: { project: Project; isInView: boolea
 export default function Projects({ projects }: { projects: Project[] }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   const items = projects;
 
@@ -125,11 +128,17 @@ export default function Projects({ projects }: { projects: Project[] }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {items.map((project, i) => (
             <div key={project.id} style={{ perspective: "1000px" }}>
-              <ProjectCard project={project} isInView={isInView} />
+              <ProjectCard project={project} isInView={isInView} onClick={() => setSelectedProject(project)} />
             </div>
           ))}
         </div>
       </div>
+      
+      <ProjectModal 
+        project={selectedProject} 
+        isOpen={!!selectedProject} 
+        onClose={() => setSelectedProject(null)} 
+      />
     </section>
   );
 }
