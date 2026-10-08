@@ -92,7 +92,7 @@ export default function AboutClient({ profile, experiences, educations = [], tes
               visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
             }}
           >
-            {experiences.map((exp: any, i: number) => (
+            {experiences.slice(0, 2).map((exp: any, i: number) => (
               <motion.div 
                 key={exp.id}
                 variants={{
@@ -125,9 +125,11 @@ export default function AboutClient({ profile, experiences, educations = [], tes
                 </div>
               </motion.div>
             ))}
+            {experiences.length > 2 && (
               <Link href="/experience" className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 text-sm font-bold uppercase tracking-widest text-gray-600 dark:text-white hover:bg-gray-50 dark:hover:bg-[color:var(--color-lime-accent)] dark:hover:text-black transition-colors shadow-sm group">
                 See all experience <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </Link>
+            )}
           </motion.div>
         </div>
 
@@ -148,7 +150,7 @@ export default function AboutClient({ profile, experiences, educations = [], tes
               visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
             }}
           >
-            {educations.map((edu, i) => (
+            {educations.slice(0, 2).map((edu, i) => (
               <motion.div 
                 key={edu.id}
                 variants={{
@@ -166,11 +168,13 @@ export default function AboutClient({ profile, experiences, educations = [], tes
                 </div>
               </motion.div>
             ))}
-            <div className="pt-2">
-              <Link href="/education" className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 text-sm font-bold uppercase tracking-widest text-gray-600 dark:text-white hover:bg-gray-50 dark:hover:bg-[color:var(--color-lime-accent)] dark:hover:text-black transition-colors shadow-sm group">
-                See all studies <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </Link>
-            </div>
+            {educations.length > 2 && (
+              <div className="pt-2">
+                <Link href="/education" className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 text-sm font-bold uppercase tracking-widest text-gray-600 dark:text-white hover:bg-gray-50 dark:hover:bg-[color:var(--color-lime-accent)] dark:hover:text-black transition-colors shadow-sm group">
+                  See all studies <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </Link>
+              </div>
+            )}
           </motion.div>
         </div>
 
