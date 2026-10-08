@@ -23,6 +23,12 @@ interface FooterSectionProps {
   linkedinLink?: string | null;
 }
 
+function ensureHttps(url: string | null | undefined): string {
+  if (!url) return "#";
+  if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("mailto:")) return url;
+  return `https://${url}`;
+}
+
 export function FooterSection({ instagramLink, githubLink, linkedinLink }: FooterSectionProps) {
   const footerLinks: FooterSectionData[] = [
     {
@@ -44,9 +50,9 @@ export function FooterSection({ instagramLink, githubLink, linkedinLink }: Foote
     {
       label: "Social Links",
       links: [
-        { title: "Instagram", href: instagramLink || "#", icon: Camera },
-        { title: "GitHub", href: githubLink || "#", icon: Terminal },
-        { title: "LinkedIn", href: linkedinLink || "#", icon: Briefcase },
+        { title: "Instagram", href: ensureHttps(instagramLink), icon: Camera },
+        { title: "GitHub", href: ensureHttps(githubLink), icon: Terminal },
+        { title: "LinkedIn", href: ensureHttps(linkedinLink), icon: Briefcase },
       ],
     },
   ];
@@ -83,14 +89,25 @@ export function FooterSection({ instagramLink, githubLink, linkedinLink }: Foote
                 <ul className="text-gray-400 mt-6 space-y-3 text-sm">
                   {section.links.map((link) => (
                     <li key={link.title}>
-                      <Link
-                        href={link.href}
-                        className="hover:text-[color:var(--color-lime-accent)] font-medium inline-flex items-center transition-all duration-300"
-                        {...(["Instagram", "GitHub", "LinkedIn"].includes(link.title) ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                      >
-                        {link.icon && <link.icon className="me-2 size-4 opacity-80" />}
-                        {link.title}
-                      </Link>
+                      {["Instagram", "GitHub", "LinkedIn"].includes(link.title) ? (
+                        <a
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:text-[color:var(--color-lime-accent)] font-medium inline-flex items-center transition-all duration-300"
+                        >
+                          {link.icon && <link.icon className="me-2 size-4 opacity-80" />}
+                          {link.title}
+                        </a>
+                      ) : (
+                        <Link
+                          href={link.href}
+                          className="hover:text-[color:var(--color-lime-accent)] font-medium inline-flex items-center transition-all duration-300"
+                        >
+                          {link.icon && <link.icon className="me-2 size-4 opacity-80" />}
+                          {link.title}
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>
