@@ -2,6 +2,8 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 interface Experience {
   id: string; jobTitle: string; company: string; duration: string; description: string; order: number;
@@ -11,7 +13,8 @@ export default function Experience({ experiences }: { experiences: Experience[] 
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const itemsToRender = experiences;
+  const itemsToRender = experiences.slice(0, 2);
+  const hasMore = experiences.length > 2;
 
   return (
     <section id="experience" ref={ref} className="py-32 relative">
@@ -62,6 +65,22 @@ export default function Experience({ experiences }: { experiences: Experience[] 
               </motion.div>
             ))}
           </div>
+        )}
+        
+        {hasMore && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="mt-16 text-center flex justify-center"
+          >
+            <Link 
+              href="/about" 
+              className="group inline-flex items-center gap-3 px-8 py-4 bg-gray-900 dark:bg-white text-white dark:text-black rounded-full text-sm font-bold uppercase tracking-widest hover:bg-gray-800 dark:hover:bg-[color:var(--color-lime-accent)] transition-all duration-300 shadow-xl hover:shadow-[0_0_20px_var(--color-lime-accent)]"
+            >
+              See All Experience <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </motion.div>
         )}
       </div>
     </section>
