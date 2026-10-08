@@ -85,13 +85,13 @@ function ProjectCard({ project, isInView, onClick }: { project: Project; isInVie
           </p>
           <div className="flex gap-3 mt-auto">
             {project.demoLink && (
-              <a onClick={(e) => e.stopPropagation()} href={project.demoLink} target="_blank" rel="noopener noreferrer"
+              <a onClick={(e) => e.stopPropagation()} href={project.demoLink || undefined} target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 bg-[color:var(--color-lime-accent)] text-black px-6 py-3 rounded-full text-sm font-bold shadow-md hover:bg-[#b0d900] hover:scale-105 transition-all">
                 <ExternalLink className="w-4 h-4" /> Live
               </a>
             )}
             {project.githubLink && (
-              <a onClick={(e) => e.stopPropagation()} href={project.githubLink} target="_blank" rel="noopener noreferrer"
+              <a onClick={(e) => e.stopPropagation()} href={project.githubLink || undefined} target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 bg-white/5 text-white border border-white/10 px-6 py-3 rounded-full text-sm font-bold shadow-sm hover:border-[color:var(--color-lime-accent)]/50 hover:bg-white/10 hover:scale-[1.02] transition-all">
                 <Code2 className="w-4 h-4 text-gray-400" /> Source
               </a>

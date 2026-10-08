@@ -72,13 +72,13 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
               
               <div className="flex flex-wrap gap-4">
                 {project.demoLink && (
-                  <a href={project.demoLink} target="_blank" rel="noreferrer"
+                  <a href={project.demoLink || undefined} target="_blank" rel="noreferrer"
                     className="inline-flex items-center justify-center gap-2 bg-[color:var(--color-lime-accent)] text-black px-6 py-3 rounded-full text-sm font-bold shadow-md hover:bg-[#b0d900] hover:scale-105 transition-all">
                     <ExternalLink className="w-4 h-4" /> Live Demo
                   </a>
                 )}
                 {(project.sourceLink || project.githubLink) && (
-                  <a href={project.sourceLink || project.githubLink} target="_blank" rel="noreferrer"
+                  <a href={project.sourceLink || project.githubLink || undefined} target="_blank" rel="noreferrer"
                     className="inline-flex items-center justify-center gap-2 bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-white border border-gray-200 dark:border-white/10 px-6 py-3 rounded-full text-sm font-bold shadow-sm hover:border-gray-300 dark:hover:border-[color:var(--color-lime-accent)]/50 hover:bg-gray-200 dark:hover:bg-white/10 hover:scale-[1.02] transition-all">
                     <Code2 className="w-4 h-4 text-gray-500 dark:text-gray-400" /> Source Code
                   </a>

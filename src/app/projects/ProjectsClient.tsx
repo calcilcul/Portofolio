@@ -68,7 +68,7 @@ export default function ProjectsClient({ projects }: { projects: any[] }) {
                 
                 {(project.sourceLink || project.githubLink) && (
                   <a
-                    href={project.sourceLink || project.githubLink}
+                    href={project.sourceLink || project.githubLink || undefined}
                     target="_blank"
                     rel="noreferrer"
                     onClick={(e) => e.stopPropagation()}
@@ -87,7 +87,7 @@ export default function ProjectsClient({ projects }: { projects: any[] }) {
               <div className="mt-auto">
                 {project.demoLink && (
                   <a
-                    href={project.demoLink}
+                    href={project.demoLink || undefined}
                     target="_blank"
                     rel="noreferrer"
                     onClick={(e) => e.stopPropagation()}
